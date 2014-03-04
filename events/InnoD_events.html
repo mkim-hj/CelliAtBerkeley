@@ -1,0 +1,67 @@
+<html>
+<head>
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js">
+</script>
+<script type="text/javascript">
+
+function httpGet(theUrl)
+{
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+
+
+var X = httpGet("https://graph.facebook.com/466093040128127/events?access_token=658413130906919|jq0oT6M9dcNBf_a6EGXbpNHrWI4");
+
+var Y = httpGet("https://graph.facebook.com/466093040128127/events?access_token=658413130906919|jq0oT6M9dcNBf_a6EGXbpNHrWI4&limit=25&after=Mjk3MDEyNjYwNDQ2Nzcx");
+
+
+var obj = jQuery.parseJSON(X);
+var obj2 = jQuery.parseJSON(Y);
+
+var upcomingEvents = new Array();
+
+for (var i=0;i<obj["data"].length;i++)
+{ 
+	var str1 = "https://graph.facebook.com/"
+	str1 = str1.concat(obj["data"][i]["id"],"?fields=name,cover,description,start_time,id&access_token=658413130906919|jq0oT6M9dcNBf_a6EGXbpNHrWI4");
+	upcomingEvents[i] = jQuery.parseJSON(httpGet(str1));;
+document.write(upcomingEvents[i]["id"] + "<br>");
+document.write("<img src=" + upcomingEvents[i]["cover"]["source"] + "><br>");
+}
+
+var pastEvents = new Array();
+
+for (var i=0;i<obj2["data"].length;i++)
+{ 
+	var str1 = "https://graph.facebook.com/"
+	str1 = str1.concat(obj2["data"][i]["id"],"?fields=name,cover,description,start_time,id&access_token=658413130906919|jq0oT6M9dcNBf_a6EGXbpNHrWI4");
+
+	pastEvents[i] = jQuery.parseJSON(httpGet(str1));
+	document.write(pastEvents[i]["id"] + "<br>");
+	if (typeof(pastEvents[i]["cover"]) != "undefined"){
+
+		document.write("<img src=" + pastEvents[i]["cover"]["source"] + "><br>");
+	}
+
+
+}
+
+
+
+
+console.log(obj2["data"].length);
+
+</script>
+</head>
+<body>
+	<div id = "Blah">
+
+	</div>
+
+</body>
+</html>
