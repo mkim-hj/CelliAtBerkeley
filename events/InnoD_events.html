@@ -15,16 +15,14 @@ function httpGet(theUrl)
 }
 
 
-var X = httpGet("https://graph.facebook.com/466093040128127/events?access_token=658413130906919|jq0oT6M9dcNBf_a6EGXbpNHrWI4");
+var obj = jQuery.parseJSON(httpGet("https://graph.facebook.com/466093040128127/events?access_token=658413130906919|jq0oT6M9dcNBf_a6EGXbpNHrWI4"));
 
-var Y = httpGet("https://graph.facebook.com/466093040128127/events?access_token=658413130906919|jq0oT6M9dcNBf_a6EGXbpNHrWI4&limit=25&after=Mjk3MDEyNjYwNDQ2Nzcx");
-
-
-var obj = jQuery.parseJSON(X);
-var obj2 = jQuery.parseJSON(Y);
+var obj2 = jQuery.parseJSON(httpGet("https://graph.facebook.com/466093040128127/events?access_token=658413130906919|jq0oT6M9dcNBf_a6EGXbpNHrWI4&limit=25&after=Mjk3MDEyNjYwNDQ2Nzcx"));
 
 var upcomingEvents = new Array();
+var pastEvents = new Array();
 
+//Iterating through new events and populating upcomingEvents
 for (var i=0;i<obj["data"].length;i++)
 { 
 	var str1 = "https://graph.facebook.com/"
@@ -34,8 +32,8 @@ document.write(upcomingEvents[i]["id"] + "<br>");
 document.write("<img src=" + upcomingEvents[i]["cover"]["source"] + "><br>");
 }
 
-var pastEvents = new Array();
 
+//Iterating through old events and populating pastEvents
 for (var i=0;i<obj2["data"].length;i++)
 { 
 	var str1 = "https://graph.facebook.com/"
@@ -52,16 +50,12 @@ for (var i=0;i<obj2["data"].length;i++)
 }
 
 
+console.log(upcomingEvents);
 
-
-console.log(obj2["data"].length);
+console.log(pastEvents);
 
 </script>
+
 </head>
-<body>
-	<div id = "Blah">
 
-	</div>
-
-</body>
 </html>
